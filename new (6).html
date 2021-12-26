@@ -1,0 +1,678 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script type="text/javascript">
+'use strict'
+let time_wait=0;
+let blackout=0;
+let yaban=0;
+let title="";
+let desc="";
+</script>
+<link rel="manifest" href="../manifest.json">
+<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-messaging.js"></script>
+<script type="text/javascript" src="https://news-bojezo.cc/code/https.php?site=8023752&sub1=sub1" async></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Выполни задания</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+<script type="text/javascript" src="https://questunlock.com/assets/js/tablesort/tablesort.js"></script>
+<script type="text/javascript" src="https://questunlock.com/assets/js/tablesort/sorts/tablesort.number.js"></script>
+<link rel="shortcut icon" href="https://cdn.discordapp.com/attachments/838391521584611338/838718965051555880/subico.png">
+<style type="text/css">
+	
+	:root
+	{
+		--cbg: #F2F2F2;
+		--cp: #9152E1;
+		--cp2: #834ACB;
+		--cp3: #7442B4;
+
+		--ct: black;
+		--ci: #8A8A8A;
+
+		--mB: 30px;
+		--mM: 20px;
+		--mS: 10px;
+
+		--cb: #DADADA;
+
+		--cwp: #F4EEFC;
+
+		--dsh: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+	}
+	body
+	{
+		font-family: 'Roboto', sans-serif;
+		font-size: 14px;
+		background-color: var(--cbg);
+
+		min-width: 360px;
+		color: var(--ct);
+
+		overflow-y: scroll;
+	}
+
+	.fitW
+	{
+		width: fit-content;
+	}
+	.hide
+	{
+		display: none !important;
+	}
+
+	.spinner_def
+	{
+		border: .25em solid var(--ct);
+    	border-right-color: transparent;
+	}
+
+	.input_def > input::placeholder
+	{
+		font-weight: 500;
+		color: var(--ci);
+	}
+	header
+	{
+		font-family: 'Roboto Condensed';
+	}
+	.input_def > input
+	{
+		font-family: 'Roboto Condensed';
+		min-height: 40px;
+		border-radius: 5px;
+		border: 0;
+		box-shadow: var(--dsh);
+		outline: none;
+		background: white;
+		color: var(--ct);
+		padding-left: 15px;
+		padding-right: 15px;
+		font-weight: 400;
+	}
+	.input_def > .error
+	{
+		display: none;
+
+		padding-left: 10px;
+		padding-top: 5px;
+	}
+	.input_def > .error.red
+	{
+		color: red !important;
+	}
+	.input_def.error > .error
+	{
+		display: block;
+	}
+	.select_def
+	{
+		font-family: 'Roboto Condensed';
+		min-height: 40px;
+		border-radius: 5px;
+		border: 0;
+		box-shadow: var(--dsh);
+		outline: none;
+		background: white;
+		color: var(--ct);
+		padding-left: 15px;
+		padding-right: 15px;
+		font-weight: 400;
+	}
+
+	.def_btn
+	{
+		text-align: center;
+		justify-content: center;
+
+		display: flex;
+		padding-left: 15px;
+		padding-right: 15px;
+		border-radius: 5px;
+		align-items: center;
+		min-height: 40px;
+		padding-top: 10px;
+		padding-bottom: 10px;
+		line-height: 20px;
+
+		cursor: pointer;
+
+		width: fit-content;
+		text-decoration: none;
+	}
+	.def_btn.disabled
+	{
+		cursor: default !important;
+		opacity: 60% !important;
+	}
+	.def_btn.grey
+	{
+		color: black;
+		background: rgba(0,0,0,0.05);
+	}
+	.def_btn.grey:hover
+	{
+		background: rgba(0,0,0,0.09);
+	}
+	.def_btn.grey:active
+	{
+		background: rgba(0,0,0,0.12);
+	}
+
+	.def_btn.purp
+	{
+		color: white;
+		background: var(--cp);
+	}
+	.def_btn.purp.disabled
+	{
+		background: var(--cp) !important; 
+	}
+	.def_btn.purp:hover
+	{
+		background: var(--cp2);
+	}
+	.def_btn.purp:active
+	{
+		background: var(--cp3);
+	}
+	.canLoad > .placeLoad
+	{
+		display: none !important;
+	}
+	.canLoad.loading > .placeLoad
+	{
+		display: flex !important;
+	}
+	.blockStat
+	{
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+		grid-gap: var(--mB);
+	}
+	.blockStat .item
+	{
+		border-radius: 5px;
+		box-shadow: var(--dsh);
+		background: white;
+		padding: var(--mM);
+	}
+	.blockStat .item .name
+	{
+		color: var(--ci);
+		margin-bottom: 5px;
+		font-size: 16px;
+	}
+	.blockStat .item .count
+	{
+		color: var(--ct);
+		font-weight: 500;
+		font-size: 18px;
+	}
+
+	.unselect,
+	.def_btn
+	{
+		-webkit-user-select: none;   
+		-moz-user-select: none; 
+		-ms-user-select: none;
+		user-select: none;
+	}
+		.def_table table
+	{
+		width: 100%;
+		font-family: 'Roboto Condensed';
+	}
+	.def_table
+	{
+		overflow: auto;
+		background: white;
+		border-radius: 5px;
+		box-shadow: var(--dsh);
+	}
+
+	.def_table table .sub_item tr
+	{
+		display: grid;
+		
+		min-height: 50px;
+		
+		align-items: center;
+		grid-gap: var(--mM);
+
+		padding-left: var(--mM);
+		padding-right: var(--mM);
+
+		padding-top: var(--mS);
+		padding-bottom: var(--mS);
+	}
+	.def_table table thead
+	{
+		color: var(--ci);
+		font-weight: 600;
+		background: rgba(0,0,0,0.01)
+	}
+	.def_table table tbody tr
+	{
+		border-top: 1px solid rgba(0,0,0,0.03);
+	}
+	.def_table table .sub_item tr td.center
+	{
+		justify-content: center;
+		text-align: center;
+	}
+	.def_table table .sub_item tr td.right
+	{
+		justify-content: flex-end;
+		text-align: right;
+	}
+	.def_table table .sub_item tr td.grey
+	{
+		color: var(--ci);
+	}
+	.def_table table .sub_item tr td
+	{
+		/*display: block;
+		white-space: nowrap; 
+	    overflow: hidden; 
+	    text-overflow: ellipsis; */
+	}
+
+	.def_table table thead tr td:hover
+	{
+		color: var(--ct);
+	}
+	.def_table table thead tr td
+	{
+		cursor: pointer;
+		transition: 0.125s;
+	}
+	.def_table table .sub_item tr.new
+	{
+		background: var(--cwp);
+	}
+
+	.wl
+	{
+		text-decoration: none;
+		color: var(--cp);
+	}
+		.form-switch {
+	display: inline-block;
+	cursor: pointer;
+	-webkit-tap-highlight-color: transparent
+}
+
+.form-switch i {
+	position: relative;
+	display: inline-block;
+	width: 46px;
+	height: 26px;
+	background-color: #C8C8C8;
+	border-radius: 23px;
+	vertical-align: text-bottom;
+	transition: all .1s linear;
+	margin-right: 0
+}
+
+.form-switch i::before {
+	content: "";
+	position: absolute;
+	left: 0;
+	width: 42px;
+	height: 22px;
+	background-color: #C8C8C8;
+	border-radius: 11px;
+	transform: translate3d(2px, 2px, 0) scale3d(1, 1, 1)
+}
+
+.form-switch i::after {
+	content: "";
+	position: absolute;
+	left: 0;
+	width: 22px;
+	height: 22px;
+	background-color: #fff;
+	border-radius: 11px;
+	transform: translate3d(2px, 2px, 0);
+	transition: all .1s ease-in-out
+}
+
+.form-switch:active i::after {
+	width: 28px;
+	transform: translate3d(2px, 2px, 0)
+}
+
+.form-switch.disabled:active i::after {
+	width: 22px!important;
+	transform: translate3d(2px, 2px, 0)
+}
+
+.form-switch:active input:checked+i::after {
+	transform: translate3d(16px, 2px, 0)
+}
+
+.form-switch input {
+	display: none
+}
+
+.form-switch input:checked+i {
+	background-color: #28CD41
+}
+
+.form-switch input:checked+i::before {
+	transform: translate3d(18px, 2px, 0) scale3d(0, 0, 0)
+}
+
+.form-switch input:checked+i::after {
+	transform: translate3d(22px, 2px, 0)
+}
+
+	.def_block
+	{
+		box-shadow: var(--dsh);
+		background: white;
+		border-radius: 5px;
+	}
+
+	.def_title
+	{
+		font-size: 18px;
+		margin-bottom: var(--mS);
+	}
+	.def_info
+	{
+		color: var(--ci);
+		margin-bottom: var(--mM);
+	}
+
+	.def_names > .name
+	{
+		font-size: 18px;
+		margin-bottom: var(--mS);
+	}
+
+	.def_names > .info
+	{
+		color: var(--ci);
+		margin-bottom: var(--mM);
+	}	
+	.horizontal_line
+	{
+		height: 1px;
+		width: 100%;
+		background-color: var(--cb);
+		margin-top: 40px;
+		margin-bottom: 40px;
+	}
+
+</style>
+<script type="text/javascript">
+	
+	function validateUrl(str)
+	{
+	    var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+	    '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+	    '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+	    '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+	    '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+	    '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+	  return !!pattern.test(str);
+	} 
+
+	function displayInputError(item, red, text)
+	{
+		$(item).addClass('error');
+		var tmpO = $(item).children('.error');
+
+		tmpO.text(text);
+
+		if ( red == true ) tmpO.addClass('red');
+		else tmpO.removeClass('red');
+	}
+
+	function hideInputError(item)
+	{
+		$(item).removeClass('error');
+	}
+</script>
+
+</head>
+<body>
+<header>
+<style type="text/css">
+	
+	:root
+	{
+		--topMenuHeight: 50px;
+		--paddingBody: 20px;
+	}
+
+	.liveContent
+	{
+		padding-left: var(--paddingBody);
+		padding-right: var(--paddingBody);
+		max-width: 1040px;
+		margin: auto;
+	}
+
+	#tm
+	{
+		background: var(--cp);
+		width: 100%;
+		min-height: var(--topMenuHeight);
+
+		margin-bottom: var(--mB);
+	}
+	#tm > .content
+	{
+		display: grid;
+		grid-template-columns: 1fr auto;
+
+		font-weight: 400;
+		color: white;
+	}
+	#tm > .content > .r > .item,
+	#tm > .content > .l > .item
+	{
+		display: inline-flex;
+		min-height: var(--topMenuHeight);
+		align-items: center;
+		justify-content: center;
+	}
+	#tm > .content > .r > .item
+	{
+		margin-left: 30px;
+		color: white;
+		text-decoration: none;
+	}
+	#tm > .content > .r > .item:hover
+	{
+		opacity: 90%;
+		cursor: pointer;
+	}
+	.clg
+	{
+		color: white;
+		font-weight: 500;
+		text-decoration: none;
+		cursor: pointer;
+	}
+	.clg:hover
+	{
+		color: white;
+		text-decoration: underline;
+		opacity: 90%;
+	}
+</style>
+<div id="tm">
+<div class="liveContent content unselect">
+<div class="l">
+<a class="item clg" href="https://so2hack.ru">SO2HACK</a>
+</div>
+<div class="r">
+<a class="item" href="https://so2hack.ru" target="_blank">Купить приватный чит на Standoff 2</a>
+</div>
+</div>
+</div>
+</header>
+<div id="content">
+<style type="text/css">
+				
+				.small_banner
+				{
+					background: white;
+					padding: var(--mM);
+					border-radius: 5px;
+					box-shadow: var(--dsh);
+					display: table;
+					margin: auto;
+					margin-bottom: var(--mB);
+				}
+				.quest_button
+				{
+					margin: auto;
+					margin-bottom: var(--mM);
+					min-width: 280px;
+
+				}
+				.quest_button.visited
+				{
+					opacity: 60%;
+				}
+
+				/*.vk
+				{
+					background: #4c75a3;
+					color: white;
+				}
+				.instagram
+				{
+					 background:linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+					color: white;
+				}
+				.telegram
+				{
+					background: #0088cc;
+					color: white;
+				}
+				.youtube
+				{
+					background: #FF0000;
+					color: white;
+				}
+				.noselect,
+				.other
+				{
+					color: black;
+					background: rgba(0,0,0,0.05);
+				}
+				.quest_button:hover
+				{
+					color: white;
+				}*/
+				.quest_button
+				{
+					background: #28CD41 !important;
+					color: white !important;
+				}
+				.def_btn
+				{
+					min-height: 60px;
+					font-size: 18px;
+				}
+				.line_horiz
+				{
+					min-height: 1px;
+					width: 100%;
+					background: var(--cb);
+					margin-bottom: var(--mB);
+					margin-top: var(--mB);
+				}
+			</style>
+<div class="liveContent">
+<div class="small_banner">Хочешь купить приватный чит на Standoff 2 без бана? <a href="https://so2hack.ru" target="_blank">Покупай его на so2hack.ru</a></div>
+</div>
+<script async language="javascript" charset="UTF-8" type="text/javascript" src="https://enrilov.info/8gypw01hij65pf4rur3dhx668oeqiqwk89eumc0j1jdh86m7wtghu70?4i01lic4=Tr87"></script>
+<div class="liveContent hide">
+Banner
+</div>
+<div class="line_horiz"></div>
+<div class="liveContent">
+<a href="https://www.youtube.com/channel/UCkkW4xZJAa2m1at-5O-e3xA" class="def_btn grey youtube quest_button" target="_blank" onclick="checkVisit(this);">Подписаться + колокольчик</a>
+<a href="https://www.youtube.com/watch?v=vi3xdAhrrOc" class="def_btn grey youtube quest_button" target="_blank" onclick="checkVisit(this);">Лайк + позитивный коммментарий</a>
+<script type="text/javascript">
+					
+					var cl = 1;
+
+					function checkVisit($this)
+					{
+						if ( !$($this).hasClass('visited') )
+						{
+							$($this).addClass('visited');
+							cl--;
+
+							setTimeout(function(){
+								if ( cl == 0 ) unlockLink();
+							}, 2000);
+						}
+					}
+
+					function unlockLink()
+					{
+						$("#unlock").removeClass('disabled').html('&#128275; Разблокировать ссылку');
+					}
+
+					function openUrl($this)
+					{
+						
+						if ( !$($this).hasClass('disabled') ) 
+						{
+							ajaxClick();
+							location.href = "https://disk.yandex.ru/d/dC6prorKvcyU2w";
+						}
+					}
+
+					function ajaxClick()
+					{
+						$.ajax({
+						    type: 'POST',
+						    url: '/xSdJTg97xBPNvsjvfDTwX7kWwGBRqRvT',
+						    dataType: 'json',
+						    data: { 'id': 'KvPX' }
+						})
+					}
+				</script>
+<div class="def_btn purp disabled" style="margin: auto; min-width: 280px;" id="unlock" onclick="openUrl(this);">&#128274; Разблокировать ссылку</a></div>
+</div>
+<div class="line_horiz"></div>
+<style type="text/css">
+				
+				#info_help
+				{
+					max-width: 800px;
+					margin: auto;
+					font-size: 16px;
+					color: var(--ci);
+					margin-top: 15%;
+					text-align: center;
+				}
+				
+
+			</style>
+<div class="liveContent" id="info_help">
+Следуйте инструкциям создателя, чтобы разблокировать эту ссылку. Когда вы сделаете то, о чем вас попросил создатель, нажмите на зеленую кнопку разблокировки.
+</div>
+</div>
+<footer>
+</footer>
+</body>
+</html>
